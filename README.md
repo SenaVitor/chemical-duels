@@ -28,7 +28,7 @@ Cada tipo de carta terá uma pontuação ao ser jogada, além disso outros fator
 | Ação | Pontuação |
 | ----- | ----------- |
 | Vitória   | 50 pts |
-| Sem Dano   | 30 pts |
+| Sem Dano   | 100 pts |
 | Jogar uma substância   | 20 pts |
 | Jogar um elemento | 5 pts |
 | Jogar uma alquimia     | 5 pts |
