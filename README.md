@@ -63,3 +63,4 @@ Cada tipo de carta terá uma pontuação ao ser jogada, além disso outros fator
 2. **`<Jogador/Oponente#2>`** - `<Irá selecionar o personagem Ernest Rutherford e jogar o jogo como Antoine Lavoisier.>`.
 
 ## Protótipos de Tela
+...
