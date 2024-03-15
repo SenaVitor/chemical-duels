@@ -1,4 +1,4 @@
-# `<Chemical Duels>`
+# `<Chemical Duel>`
 
 ## Motivação
 
