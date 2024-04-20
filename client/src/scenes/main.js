@@ -1,7 +1,3 @@
-import CardHandler from "./helpers/CardHandler";
-import DeckHandler from "./helpers/DeckHandler";
-import InteractiveHandler from "./helpers/InteractiveHandler";
-
 let game;
 
 window.onload = function(){

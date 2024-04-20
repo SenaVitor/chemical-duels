@@ -1,5 +1,5 @@
 export default class GameHandler {
-    constructor() {
+    constructor(scene) {
         
     }
 }

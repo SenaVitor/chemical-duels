@@ -1,5 +1,5 @@
 export default class InteractiveHandler {
-    constructor() {
+    constructor(scene) {
         
     }
 }

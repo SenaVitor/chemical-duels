@@ -1,5 +1,5 @@
 export default class DeckHandler {
-    constructor() {
+    constructor(scene) {
         
     }
 }
