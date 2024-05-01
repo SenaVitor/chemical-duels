@@ -5,19 +5,19 @@ export default class StartScene extends Phaser.Scene{
 
     create(){
         const config = {
-            width: 1200,
-            height: 1100
+            width: 800,
+            height: 600
         };
         this.menuMusic = this.sound.add('menuMusic');
         this.menuMusic.play({
-            volume: 1,
+            volume: 0.5,
             loop: true
         });
         this.add.image(0, 0, 'menu').setOrigin(0);
-        const startButton = this.add.image(config.width/2 - 375, config.height/2 - 10, 'start').setOrigin(0).setScale(0.8, 1);
-        const tutorialButton = this.add.image(config.width/2 - 280, config.height/2 - 10, 'tutorial').setOrigin(0).setScale(0.8, 1);
-        const creditButton = this.add.image(config.width/2 - 185, config.height/2 - 10, 'credits').setOrigin(0).setScale(0.8, 1);
-        const scoreButton = this.add.image(config.width/2 - 90, config.height/2 - 10, 'score').setOrigin(0).setScale(0.8, 1);
+        const startButton = this.add.image(config.width/2 - 175, config.height/2 + 237, 'start').setOrigin(0).setScale(0.8, 1);
+        const tutorialButton = this.add.image(config.width/2 - 80, config.height/2 + 237, 'tutorial').setOrigin(0).setScale(0.8, 1);
+        const creditButton = this.add.image(config.width/2 + 15, config.height/2 + 237, 'credits').setOrigin(0).setScale(0.8, 1);
+        const scoreButton = this.add.image(config.width/2 + 110, config.height/2 + 237, 'score').setOrigin(0).setScale(0.8, 1);
 
         startButton.setInteractive();
         tutorialButton.setInteractive();

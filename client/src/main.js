@@ -5,8 +5,8 @@ import Preload from './scenes/Preload.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 1200,
-    height: 1100,
+    width: 800,
+    height: 600,
     scene: [
         Preload, StartScene, Game
     ]

@@ -15,7 +15,7 @@ export default class Game extends Phaser.Scene {
     create() {
         this.menuMusic = this.sound.add('duelMusic');
         this.menuMusic.play({
-            volume: 1,
+            volume: 0.5,
             loop: true
         });
         this.CardHandler = new CardHandler();

@@ -20,8 +20,8 @@ export default class InteractiveHandler {
             let pointer = scene.input.activePointer;
             if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview = scene.add.image(
-                    pointer.worldX, pointer.worldY, gameObjects[0].data.values.sprite
-                ).setScale(0.5, 0.5);
+                    pointer.worldX, pointer.worldY - 70, gameObjects[0].data.values.sprite
+                ).setScale(0.25);
             }
         });
 
@@ -52,7 +52,7 @@ export default class InteractiveHandler {
 
         scene.input.on('drop', (pointer, gameObject, dropZone) => {
             if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready") {
-                gameObject.x = (dropZone.x - 350) + (dropZone.data.values.cards * 50);
+                gameObject.x = (dropZone.x - 250) + (dropZone.data.values.cards * 50);
                 gameObject.y = dropZone.y;
                 scene.dropZone.data.values.cards++;
                 scene.input.setDraggable(gameObject, false);

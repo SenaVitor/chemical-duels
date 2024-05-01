@@ -1,7 +1,7 @@
 export default class ZoneHandler {
     constructor(scene) {
         this.renderZone = (x, y) => {
-            const dropZone = scene.add.zone(x, y, 850, 230).setRectangleDropZone(850, 230);
+            const dropZone = scene.add.zone(x, y, 600, 200).setRectangleDropZone(600, 300);
             dropZone.setData({
                 "cards": 0
             });
