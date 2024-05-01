@@ -1,17 +1,14 @@
 import Phaser from 'phaser';
 import Game from './scenes/game.js';
+import StartScene from './scenes/StartScene.js';
+import Preload from './scenes/Preload.js';
 
 const config = {
     type: Phaser.AUTO,
-    scale: {
-        mode: Phaser.Scale.FIT,
-        width: 800,
-        height: 600
-    },
-    // width: 800,
-    // height: 600,
+    width: 1200,
+    height: 1100,
     scene: [
-        Game,
+        Preload, StartScene, Game
     ]
 }
 
