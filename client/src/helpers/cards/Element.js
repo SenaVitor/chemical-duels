@@ -1,8 +1,8 @@
 import Card from "./Card";
 
-export default class Boolean extends Card {
+export default class Element extends Card {
     constructor(scene, sprite) {
-        super(scene, sprite);
+        super(scene);
         this.name = "element";
         if(sprite) {
             this.playerCardSprite = sprite;

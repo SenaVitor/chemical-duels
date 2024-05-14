@@ -37,6 +37,7 @@ export default class Preload extends Phaser.Scene{
         this.load.image('h', '/assets/cards/H.png');
         this.load.image('k', '/assets/cards/K.png');
         this.load.image('mn', '/assets/cards/MN.png');
+        this.load.image('mg', '/assets/cards/MG.png');
         this.load.image('n', '/assets/cards/N.png');
         this.load.image('na', '/assets/cards/NA.png');
         this.load.image('o', '/assets/cards/O.png');
@@ -46,7 +47,7 @@ export default class Preload extends Phaser.Scene{
         this.load.image('naf', '/assets/cards/NAF.png');
         this.load.image('nacl', '/assets/cards/NACL.png');
         this.load.image('mno', '/assets/cards/MNO.png');
-        this.load.image('mg', '/assets/cards/MG.png');
+        this.load.image('mgo', '/assets/cards/MGO.png');
         this.load.image('kf', '/assets/cards/KF.png');
         this.load.image('kbr', '/assets/cards/KBR.png');
         this.load.image('hcl', '/assets/cards/HCL.png');
@@ -56,7 +57,6 @@ export default class Preload extends Phaser.Scene{
         this.load.image('cas', '/assets/cards/CAS.png');
         this.load.image('c2h2', '/assets/cards/C2H2.png');
         this.load.image('bro', '/assets/cards/BRO.png');
-        this.load.image('mgo', '/assets/cards/MGO.png');
     }
 
     create(){

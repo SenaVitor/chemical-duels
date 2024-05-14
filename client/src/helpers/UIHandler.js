@@ -18,15 +18,19 @@ export default class UIHandler {
             scene.playerHandArea.setStrokeStyle(4, 0xff69b4);
             scene.playerDeckArea = scene.add.rectangle(670, 530, 85, 118);
             scene.playerDeckArea.setStrokeStyle(3, 0x00ffff);
+            scene.playerSubstancesArea = scene.add.rectangle(670, 395, 85, 118);
+            scene.playerSubstancesArea.setStrokeStyle(3, 0x00ffff);
             
             scene.opponentHandArea = scene.add.rectangle(315, 80, 600, 126);
             scene.opponentHandArea.setStrokeStyle(4, 0xff69b4);
             scene.opponentDeckArea = scene.add.rectangle(670, 80, 85, 118);
             scene.opponentDeckArea.setStrokeStyle(3, 0x00ffff);
+            scene.opponentSubstancesArea = scene.add.rectangle(670, 215, 85, 118);
+            scene.opponentSubstancesArea.setStrokeStyle(3, 0x00ffff);
         }
 
         this.buildGameText = () => {
-            scene.dealCards = scene.add.text(643, 300, "Deal Cards").setFontSize(14).setFontFamily("Trebuchet MS");
+            scene.dealCards = scene.add.text(640, 295, "Deal Cards").setFontSize(14).setFontFamily("Trebuchet MS");
         }
 
         this.buildUI = () => {

@@ -1,5 +1,5 @@
 export default class Card {
-    constructor(scene, sprite) {
+    constructor(scene) {
         this.render = (x, y, type) => {
             let sprite;
             if(type === 'playerCard') {
