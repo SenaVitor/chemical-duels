@@ -21,7 +21,7 @@ export default class InteractiveHandler {
             if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview = scene.add.image(
                     pointer.worldX, pointer.worldY - 70, gameObjects[0].data.values.sprite
-                ).setScale(0.25);
+                );
             }
         });
 
@@ -56,7 +56,7 @@ export default class InteractiveHandler {
                 gameObject.y = dropZone.y;
                 scene.dropZone.data.values.cards++;
                 scene.input.setDraggable(gameObject, false);
-                scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
+                scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
             } else {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;

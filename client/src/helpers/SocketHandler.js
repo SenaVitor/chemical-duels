@@ -16,8 +16,8 @@ export default class SocketHandler {
         scene.socket.on('changeGameState', (gameState) => {
             scene.GameHandler.changeGameState(gameState);
             if(gameState === "Initializing") {
-                scene.DeckHandler.dealCard(672, 530, "cardBack", "playerCard");
-                scene.DeckHandler.dealCard(672, 80, "cardBack", "opponentCard");
+                scene.DeckHandler.dealCard(670, 530, "cardBack", "playerCard", null);
+                scene.DeckHandler.dealCard(670, 80, "cardBack", "opponentCard", null);
                 scene.dealCards.setInteractive();
                 scene.dealCards.setColor('#00ffff');
             }
@@ -30,20 +30,20 @@ export default class SocketHandler {
         scene.socket.on('dealCards', (socketId, cards) => {
             if(socketId === scene.socket.id) {
                 for(let i in cards) {
-                    let card = scene.GameHandler.playerHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 530, cards[i], "playerCard"));
+                    let card = scene.GameHandler.playerHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 530, cards[i], "playerCard", null));
                 }
             }else {
                 for(let i in cards) {
-                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 80, "cardBack", "opponentCard"));
+                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 80, "cardBack", "opponentCard", null));
                 }
             }
         });
 
-        scene.socket.on('cardPlayed', (cardName, socketId) => {
+        scene.socket.on('cardPlayed', (card, socketId) => {
             if(socketId !== scene.socket.id) {
                 scene.GameHandler.opponentHand.shift().destroy();
                 scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
-                    scene.dropZone.y, cardName, "opponentCard");
+                    scene.dropZone.y, card.name, "opponentCard", card.sprite);
                 scene.dropZone.data.values.cards++;
             }
         });

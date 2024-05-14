@@ -1,5 +1,5 @@
 export default class Card {
-    constructor(scene) {
+    constructor(scene, sprite) {
         this.render = (x, y, type) => {
             let sprite;
             if(type === 'playerCard') {
@@ -12,7 +12,7 @@ export default class Card {
                 "name": this.name,
                 "type": type,
                 "sprite": sprite
-            }).setScale(0.15);
+            }).setScale(0.5);
             if(type === 'playerCard') {
                 scene.input.setDraggable(card);
             }
