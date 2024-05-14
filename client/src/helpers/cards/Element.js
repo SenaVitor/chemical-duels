@@ -3,7 +3,7 @@ import Card from "./Card";
 export default class Boolean extends Card {
     constructor(scene, sprite) {
         super(scene, sprite);
-        this.name = "boolean";
+        this.name = "element";
         if(sprite) {
             this.playerCardSprite = sprite;
             this.opponentCardSprite = sprite;
