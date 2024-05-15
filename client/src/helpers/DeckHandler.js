@@ -7,7 +7,7 @@ export default class DeckHandler {
         this.dealCard = (x, y, name, type, complement) => {
             let sprite;
             let elements = [];
-            if(Array.isArray(complement)){
+            if(name === "substance"){
                 elements = complement;
             }else{
                 sprite = complement;

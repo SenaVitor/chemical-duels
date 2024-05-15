@@ -26,7 +26,7 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('pointerout', (event, gameObjects) => {
-            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack" && scene.cardPreview) {
                 scene.cardPreview.setVisible(false);
             }
         });
@@ -51,16 +51,33 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('drop', (pointer, gameObject, dropZone) => {
-            if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready") {
+            if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "substance") {
                 gameObject.x = (dropZone.x - 250) + (dropZone.data.values.cards * 50);
                 gameObject.y = dropZone.y;
                 scene.dropZone.data.values.cards++;
                 scene.input.setDraggable(gameObject, false);
                 scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
             } else {
+                if(gameObject.data.list.name === "substance"){
+                    const sprites = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
+                    let numCards = scene.dropZone.data.values.cards;
+                    sprites.forEach((sprite, i) => {
+                        if(!Array.isArray(scene.substancesPreview)) scene.substancesPreview = [];
+                        if(i > sprites.length/2 && numCards === scene.dropZone.data.values.cards + i) numCards = scene.dropZone.data.values.cards;
+                        const card = scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (numCards * 75), 
+                        i <= sprites.length/2 ? scene.dropZone.y - 50 : scene.dropZone.y + 50, "substance", "playerCard", sprite);
+                        // scene.dropZone.data.values.cards++;
+                        // scene.substancesPreview.push(scene.add.image(
+                        //     (scene.dropZone.x - 250) + (numCards * 75), 
+                        //     i <= sprites.length/2 ? scene.dropZone.y - 50 : scene.dropZone.y + 50, 
+                        //     sprite
+                        // ).setScale(0.5));
+                        numCards++;
+                    });
+                }
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-        })
+        });
     }
 }

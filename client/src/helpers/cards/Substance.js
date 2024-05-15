@@ -4,6 +4,25 @@ export default class Substance extends Card {
     constructor(scene, elements) {
         super(scene);
         if(!elements) return;
+        let substance = "";
+        if(!Array.isArray(elements)){
+            substance = elements;
+        }else{
+            elements.forEach(element => {
+                substance += element;
+            });
+            if(substance === "hso"){
+                substance = "h2so4";
+            }else if(substance === "ho"){
+                substance = "h2o";
+            }else if(substance === "cs"){
+                substance = "cs2";
+            }else if(substance === "ch"){
+                substance = "c2h2";
+            }
+        }
+        
+        console.log(substance);
         // const sprite = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
         // const substances = {
         //     no: ["n", "o"],
@@ -22,23 +41,6 @@ export default class Substance extends Card {
         //     c2h2: ["c", "h"],
         //     bro: ["br", "o"],
         // };
-        let substance = "";
-        elements.forEach(element => {
-            substance += element;
-        });
-        if(substance === "hso"){
-            substance = "h2so4";
-        }else if(substance === "ho"){
-            substance = "h2o";
-        }else if(substance === "cs"){
-            substance = "cs2";
-        }else if(substance === "ch"){
-            substance = "c2h2";
-        }
-
-        
-        console.log("elements = " + elements);
-        console.log("substance = " + substance);
 
         this.name = "substance";
         this.playerCardSprite = substance;
