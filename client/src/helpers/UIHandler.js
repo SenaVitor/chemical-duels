@@ -30,7 +30,10 @@ export default class UIHandler {
         }
 
         this.buildGameText = () => {
-            scene.dealCards = scene.add.text(640, 295, "Deal Cards").setFontSize(14).setFontFamily("Trebuchet MS");
+            scene.dealCards = scene.add.text(630, 295, "Puxar Cartas").setFontSize(14).setFontFamily("Trebuchet MS");
+            scene.textSubstances = scene.add.text(633, 345, "Substâncias").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.listSubstances = scene.add.text(648, 380, "Listar").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1).setInteractive();
+            scene.playSubstance = scene.add.text(645, 410, "Invocar").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1).setInteractive();
         }
 
         this.buildUI = () => {

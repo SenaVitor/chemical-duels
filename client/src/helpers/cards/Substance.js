@@ -22,7 +22,6 @@ export default class Substance extends Card {
             }
         }
         
-        console.log(substance);
         // const sprite = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
         // const substances = {
         //     no: ["n", "o"],

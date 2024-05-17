@@ -18,8 +18,10 @@ export default class SocketHandler {
             if(gameState === "Initializing") {
                 scene.DeckHandler.dealCard(670, 530, "cardBack", "playerCard");
                 scene.DeckHandler.dealCard(670, 80, "cardBack", "opponentCard");
-                scene.DeckHandler.dealCard(670, 395, "substance", "playerCard", ["h", "o"]);
-                scene.DeckHandler.dealCard(670, 215, "substance", "opponentCard", ["br", "o"]);
+                let cardP = scene.DeckHandler.dealCard(670, 395, "substance", "playerCard", ["h", "o"]);
+                let cardO = scene.DeckHandler.dealCard(670, 215, "substance", "opponentCard", ["br", "o"]);
+                cardP.alpha = 0.5;
+                cardO.alpha = 0.5;
                 scene.dealCards.setInteractive();
                 scene.dealCards.setColor('#00ffff');
             }
@@ -44,8 +46,9 @@ export default class SocketHandler {
         scene.socket.on('cardPlayed', (card, socketId) => {
             if(socketId !== scene.socket.id) {
                 if(card.name !== "substance") scene.GameHandler.opponentHand.shift().destroy();
-                scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
-                    scene.dropZone.y, card.name, "opponentCard", card.sprite);
+                if(!scene.cards) scene.cards = [];
+                scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
+                    scene.dropZone.y, card.name, "opponentCard", card.sprite));
                 scene.dropZone.data.values.cards++;
             }
         });
