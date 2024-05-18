@@ -18,10 +18,10 @@ export default class SocketHandler {
             if(gameState === "Initializing") {
                 scene.DeckHandler.dealCard(670, 530, "cardBack", "playerCard");
                 scene.DeckHandler.dealCard(670, 80, "cardBack", "opponentCard");
-                let cardP = scene.DeckHandler.dealCard(670, 395, "substance", "playerCard", ["h", "o"]);
-                let cardO = scene.DeckHandler.dealCard(670, 215, "substance", "opponentCard", ["br", "o"]);
-                cardP.alpha = 0.5;
-                cardO.alpha = 0.5;
+                let cardP = scene.add.image(670, 395, "h2o").setScale(0.5);
+                let cardO = scene.add.image(670, 215, "bro").setScale(0.5);
+                cardP.alpha = 0.8;
+                cardO.alpha = 0.8;
                 scene.dealCards.setInteractive();
                 scene.dealCards.setColor('#00ffff');
             }
