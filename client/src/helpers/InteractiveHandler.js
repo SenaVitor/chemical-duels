@@ -18,7 +18,7 @@ export default class InteractiveHandler {
 
         scene.input.on('pointerover', (event, gameObjects) => {
             let pointer = scene.input.activePointer;
-            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+            if(gameObjects[0].type === "Image" && gameObjects[0].data && gameObjects[0].data.list && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview = scene.add.image(
                     pointer.worldX, pointer.worldY - 70, gameObjects[0].data.values.sprite
                 ).setDepth(2);
@@ -26,7 +26,7 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('pointerout', (event, gameObjects) => {
-            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack" && scene.cardPreview) {
+            if(gameObjects[0].type === "Image" && gameObjects[0].data && gameObjects[0].data.list && gameObjects[0].data.list.name !== "cardBack" && scene.cardPreview) {
                 scene.cardPreview.setVisible(false);
             }
         });
@@ -51,11 +51,6 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('drop', (pointer, gameObject, dropZone) => {
-            if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
-                const index = scene.substancesPreview.indexOf(substance => substance.sprite === gameObject.data.list.sprite);
-                const substance = scene.substancesPreview.splice(index, 1);
-                stopShowSubstances(scene);
-            }
             playCard(gameObject, dropZone, scene);
         });
 
@@ -122,11 +117,23 @@ export default class InteractiveHandler {
 
 function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
+        if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
+            // const index = scene.substancesPreview.indexOf(substance => substance.sprite === gameObject.data.list.sprite);
+            // let substance = scene.substancesPreview.splice(index, 1);
+            // substance[0].setDepth(0);
+            const card = scene.DeckHandler.dealCard(dropZone.x, dropZone.y, "substance", "playerCard", gameObject.data.list.sprite);
+            gameObject = card;
+            // console.log(gameObject);
+            // console.log(scene.substancesPreview);
+            stopShowSubstances(scene);
+        }
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.cards * 50);
         gameObject.y = dropZone.y;
         if(!scene.cards) scene.cards = [];
         scene.cards.push(gameObject);
         scene.dropZone.data.values.cards++;
+        console.log(scene.input);
+        console.log(gameObject);
         scene.input.setDraggable(gameObject, false);
         scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
     } else {
