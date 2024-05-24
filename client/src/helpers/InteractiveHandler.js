@@ -83,7 +83,10 @@ export default class InteractiveHandler {
             if(!scene.listingSubstances){
                 scene.substancesZone.setVisible(true);
                 const sprites = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
-                const spriteList = scene.cards.map(card => card.data.list.sprite);
+                const spriteList = scene.cards.map(card => {
+                    if(card.data.list.name !== "substance")
+                        return card.data.list.sprite;
+                });
                 const possibleSubstances = findPossibleCombinations(spriteList, sprites);
                 let numCards = 0;
                 possibleSubstances.forEach((substance, i) => {
@@ -115,6 +118,16 @@ export default class InteractiveHandler {
     }
 }
 
+
+// let elements = removeNumbers(substance);
+// elements = stringToArray(elements);
+// function removeNumbers(str) {
+//     return str.replace(/\d/g, '');
+// }
+// function stringToArray(str) {
+//     return str.split('');
+// }
+
 function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
         if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
@@ -122,24 +135,55 @@ function playCard(gameObject, dropZone, scene){
             // let substance = scene.substancesPreview.splice(index, 1);
             // substance[0].setDepth(0);
             const card = scene.DeckHandler.dealCard(dropZone.x, dropZone.y, "substance", "playerCard", gameObject.data.list.sprite);
-            gameObject = card;
-            // console.log(gameObject);
-            // console.log(scene.substancesPreview);
+            const elements = getElements(gameObject.data.list.sprite);
+            removeElements(elements, scene);
             stopShowSubstances(scene);
+            gameObject = card;
         }
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.cards * 50);
         gameObject.y = dropZone.y;
         if(!scene.cards) scene.cards = [];
         scene.cards.push(gameObject);
         scene.dropZone.data.values.cards++;
-        console.log(scene.input);
-        console.log(gameObject);
         scene.input.setDraggable(gameObject, false);
         scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
     } else {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
     }
+}
+
+function removeElements(elements, scene){
+    elements.forEach(char => {
+        let index = scene.cards.findIndex(card => card.data.list.sprite === char);
+        if (index !== -1) {
+            scene.cards[index].destroy();
+            scene.cards.splice(index, 1);
+        } 
+    });
+}
+
+function getElements(substance) {
+    const substances = {
+        no: ["n", "o"],
+        naoh: ["na", "o", "h"],
+        naf: ["na", "f"],
+        nacl: ["na", "cl"],
+        mno: ["mn", "o"],
+        mgo: ["mg", "o"],
+        kf: ["k", "f"],
+        kbr: ["k", "br"],
+        hcl: ["h", "cl"],
+        h2so4: ["h", "s", "o"],
+        h2o: ["h", "o"],
+        cs2: ["c", "s"],
+        cas: ["ca", "s"],
+        c2h2: ["c", "h"],
+        bro: ["br", "o"],
+    };
+
+    const elements = substances[substance];
+    return elements;
 }
 
 function stopShowSubstances(scene) {

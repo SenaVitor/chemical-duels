@@ -45,12 +45,52 @@ export default class SocketHandler {
 
         scene.socket.on('cardPlayed', (card, socketId) => {
             if(socketId !== scene.socket.id) {
-                if(card.name !== "substance") scene.GameHandler.opponentHand.shift().destroy();
                 if(!scene.cards) scene.cards = [];
-                scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
-                    scene.dropZone.y, card.name, "opponentCard", card.sprite));
+                if(card.name !== "substance") {
+                    scene.GameHandler.opponentHand.shift().destroy();
+                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
+                        scene.dropZone.y, card.name, "opponentCard", card.sprite));
+                }else{
+                    const elements = getElements(card.sprite);
+                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
+                        scene.dropZone.y, card.name, "opponentCard", elements));
+                    removeElements(elements, scene);
+                }
                 scene.dropZone.data.values.cards++;
             }
         });
     }
+}
+
+function removeElements(elements, scene){
+    elements.forEach(char => {
+        let index = scene.cards.findIndex(card => card.data.list.sprite === char);
+        if (index !== -1) {
+            scene.cards[index].destroy();
+            scene.cards.splice(index, 1);
+        } 
+    });
+}
+
+function getElements(substance) {
+    const substances = {
+        no: ["n", "o"],
+        naoh: ["na", "o", "h"],
+        naf: ["na", "f"],
+        nacl: ["na", "cl"],
+        mno: ["mn", "o"],
+        mgo: ["mg", "o"],
+        kf: ["k", "f"],
+        kbr: ["k", "br"],
+        hcl: ["h", "cl"],
+        h2so4: ["h", "s", "o"],
+        h2o: ["h", "o"],
+        cs2: ["c", "s"],
+        cas: ["ca", "s"],
+        c2h2: ["c", "h"],
+        bro: ["br", "o"],
+    };
+
+    const elements = substances[substance];
+    return elements;
 }
