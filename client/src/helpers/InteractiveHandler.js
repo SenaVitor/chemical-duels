@@ -51,6 +51,11 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('drop', (pointer, gameObject, dropZone) => {
+            if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
+                scene.GameHandler.score += 20;
+            }else{
+                scene.GameHandler.score += 5;
+            }
             playCard(gameObject, dropZone, scene);
         });
 
@@ -79,7 +84,7 @@ export default class InteractiveHandler {
         });
         
         scene.playSubstance.on('pointerdown', () => {
-            if(scene.dropZone.data.values.cards < 2) return;
+            if(scene.dropZone.data.values.playerCards < 2) return;
             if(!scene.listingSubstances){
                 scene.substancesZone.setVisible(true);
                 const sprites = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
@@ -107,26 +112,8 @@ export default class InteractiveHandler {
                 stopShowSubstances(scene);
             }
         });
-
-        // scene.input.on('pointerdown', (pointer, gameObject, dropZone) => {
-        //     if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
-        //         console.log(gameObject);
-        //         playCard(gameObject, dropZone, scene);
-        //         stopShowSubstances(scene);
-        //     }
-        // });
     }
 }
-
-
-// let elements = removeNumbers(substance);
-// elements = stringToArray(elements);
-// function removeNumbers(str) {
-//     return str.replace(/\d/g, '');
-// }
-// function stringToArray(str) {
-//     return str.split('');
-// }
 
 function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
@@ -140,11 +127,11 @@ function playCard(gameObject, dropZone, scene){
             stopShowSubstances(scene);
             gameObject = card;
         }
-        gameObject.x = (dropZone.x - 250) + (dropZone.data.values.cards * 50);
-        gameObject.y = dropZone.y;
+        gameObject.x = (dropZone.x - 250) + (dropZone.data.values.playerCards * 100);
+        gameObject.y = dropZone.y + 70;
         if(!scene.cards) scene.cards = [];
         scene.cards.push(gameObject);
-        scene.dropZone.data.values.cards++;
+        dropZone.data.values.playerCards++;
         scene.input.setDraggable(gameObject, false);
         scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
     } else {
@@ -157,10 +144,31 @@ function removeElements(elements, scene){
     elements.forEach(char => {
         let index = scene.cards.findIndex(card => card.data.list.sprite === char);
         if (index !== -1) {
+            if(scene.cards[index].data.list.type === "playerCard"){
+                scene.dropZone.data.values.playerCards--;
+            }else{
+                scene.dropZone.data.values.opponentCards--;
+            } 
             scene.cards[index].destroy();
             scene.cards.splice(index, 1);
-        } 
+        }
     });
+    orderCards(scene);
+}
+
+function orderCards(scene){
+    let playerIndex = 0;
+    let opponentIndex = 0;
+    scene.cards.forEach(card => {
+        if(card.data.list.type === "playerCard"){
+            card.x = (scene.dropZone.x - 250) + (playerIndex * 100);
+            playerIndex++;
+        } else{
+            card.x = (scene.dropZone.x - 250) + (opponentIndex * 100);
+            opponentIndex++;
+        }
+            
+    }); 
 }
 
 function getElements(substance) {

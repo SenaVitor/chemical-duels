@@ -48,18 +48,33 @@ export default class SocketHandler {
                 if(!scene.cards) scene.cards = [];
                 if(card.name !== "substance") {
                     scene.GameHandler.opponentHand.shift().destroy();
-                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
-                        scene.dropZone.y, card.name, "opponentCard", card.sprite));
+                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.opponentCards * 100), 
+                        scene.dropZone.y - 70, card.name, "opponentCard", card.sprite));
                 }else{
                     const elements = getElements(card.sprite);
-                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.cards * 50), 
-                        scene.dropZone.y, card.name, "opponentCard", elements));
+                    scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.opponentCards * 100), 
+                        scene.dropZone.y - 70, card.name, "opponentCard", elements));
                     removeElements(elements, scene);
+                    orderCards(scene);
                 }
-                scene.dropZone.data.values.cards++;
+                scene.dropZone.data.values.opponentCards++;
             }
         });
     }
+}
+
+function orderCards(scene){
+    let playerIndex = 0;
+    let opponentIndex = 0;
+    scene.cards.forEach(card => {
+        if(card.data.list.type === "playerCard"){
+            card.x = (scene.dropZone.x - 250) + (playerIndex * 100);
+            playerIndex++;
+        } else{
+            card.x = (scene.dropZone.x - 250) + (opponentIndex * 100);
+            opponentIndex++;
+        }
+    }); 
 }
 
 function removeElements(elements, scene){
