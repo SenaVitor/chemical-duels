@@ -13,17 +13,10 @@ export default class Preload extends Phaser.Scene{
         this.load.image('score', '/assets/img/placar.png');
         this.load.image('credits', '/assets/img/creditos.png');
         this.load.image('board', '/assets/img/tabuleiro.png');
-        // this.load.image('playerCardBack', '/assets/img/fundoDeck1.jpg');
-        // this.load.image('opponentCardBack', '/assets/img/fundoDeck2.jpg');
         this.load.image('logo', '/assets/img/logo.png');
 
         this.load.image('cyanCardBack', '/assets/img/fundoDeck1.png');
         this.load.image('magentaCardBack', '/assets/img/fundoDeck2.png');
-
-        // this.load.image('cyanBoolean', '/assets/cards/S.png');
-        // this.load.image('magentaBoolean', '/assets/cards/S.png');
-        // this.load.image('cyanPing', '/assets/cards/Lavoisier.png');
-        // this.load.image('magentaPing', '/assets/cards/Lavoisier.png');
         
         this.load.image('transmutacao', '/assets/cards/TransmutaçãoArtificial.png');
         this.load.image('lavoisier', '/assets/cards/Lavoisier.png');
