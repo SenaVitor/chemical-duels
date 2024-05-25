@@ -84,7 +84,7 @@ export default class InteractiveHandler {
         });
         
         scene.playSubstance.on('pointerdown', () => {
-            if(scene.dropZone.data.values.playerCards < 2) return;
+            if((scene.dropZone.data.values.playerCards + scene.dropZone.data.values.opponentCards) < 2) return;
             if(!scene.listingSubstances){
                 scene.substancesZone.setVisible(true);
                 const sprites = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];

@@ -19,10 +19,10 @@ export default class StartScene extends Phaser.Scene{
         const creditButton = this.add.image(config.width/2 + 15, config.height/2 + 237, 'credits').setOrigin(0).setScale(0.8, 1);
         const scoreButton = this.add.image(config.width/2 + 110, config.height/2 + 237, 'score').setOrigin(0).setScale(0.8, 1);
 
-        startButton.setInteractive();
-        tutorialButton.setInteractive();
-        creditButton.setInteractive();
-        scoreButton.setInteractive();
+        startButton.setInteractive({ useHandCursor: true });
+        tutorialButton.setInteractive({ useHandCursor: true });
+        creditButton.setInteractive({ useHandCursor: true });
+        scoreButton.setInteractive({ useHandCursor: true });
         
         startButton.on("pointerdown", () => {
             this.menuMusic.stop();
@@ -33,8 +33,8 @@ export default class StartScene extends Phaser.Scene{
             console.log("Tutorial");
         });
         creditButton.on("pointerdown", () => {
-            // this.scene.start('DuelScene');
-            console.log("Credits");
+            this.menuMusic.stop();
+            this.scene.start('Credits');
         });
         scoreButton.on("pointerdown", () => {
             // this.scene.start('DuelScene');
