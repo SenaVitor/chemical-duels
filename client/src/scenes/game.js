@@ -13,8 +13,8 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
-        this.menuMusic = this.sound.add('duelMusic');
-        this.menuMusic.play({
+        this.duelMusic = this.sound.add('duelMusic');
+        this.duelMusic.play({
             volume: 0.5,
             loop: true
         });
@@ -28,6 +28,9 @@ export default class Game extends Phaser.Scene {
     }
     
     update() {
-
+        if(this.GameHandler.gameState !== "Initializing" && this.GameHandler.playerHand.length === 0 && this.GameHandler.opponentHand.length === 0){
+            this.duelMusic.stop();
+            this.scene.start('Score', { score: this.GameHandler.score });
+        }
     }
 }
