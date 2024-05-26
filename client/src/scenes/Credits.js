@@ -4,10 +4,6 @@ export default class Credits extends Phaser.Scene{
     }
 
     create(){
-        const config = {
-            width: 800,
-            height: 600
-        };
         this.creditsMusic = this.sound.add('creditsMusic');
         this.creditsMusic.play({
             volume: 0.5,
