@@ -55,7 +55,6 @@ export default class SocketHandler {
                     scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.opponentCards * 100), 
                         scene.dropZone.y - 70, card.name, "opponentCard", elements));
                     removeElements(elements, scene);
-                    orderCards(scene);
                 }
                 scene.dropZone.data.values.opponentCards++;
             }
@@ -81,10 +80,16 @@ function removeElements(elements, scene){
     elements.forEach(char => {
         let index = scene.cards.findIndex(card => card.data.list.sprite === char);
         if (index !== -1) {
+            if(scene.cards[index].data.list.type === "playerCard"){
+                scene.dropZone.data.values.playerCards--;
+            }else{
+                scene.dropZone.data.values.opponentCards--;
+            }
             scene.cards[index].destroy();
             scene.cards.splice(index, 1);
         } 
     });
+    orderCards(scene);
 }
 
 function getElements(substance) {

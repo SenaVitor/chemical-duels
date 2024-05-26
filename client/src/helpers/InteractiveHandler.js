@@ -51,7 +51,8 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('drop', (pointer, gameObject, dropZone) => {
-            if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
+            if(!gameObject.data || !gameObject.data.list) return;
+            if(gameObject.data.list.name === "substance"){
                 scene.GameHandler.score += 20;
             }else{
                 scene.GameHandler.score += 5;
@@ -117,7 +118,8 @@ export default class InteractiveHandler {
 
 function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
-        if(gameObject.data && gameObject.data.list && gameObject.data.list.name === "substance"){
+        if(!scene.cards) scene.cards = [];
+        if(gameObject.data.list.name === "substance"){
             // const index = scene.substancesPreview.indexOf(substance => substance.sprite === gameObject.data.list.sprite);
             // let substance = scene.substancesPreview.splice(index, 1);
             // substance[0].setDepth(0);
@@ -126,11 +128,13 @@ function playCard(gameObject, dropZone, scene){
             removeElements(elements, scene);
             stopShowSubstances(scene);
             gameObject = card;
+        }else{
+            const index = scene.GameHandler.playerHand.indexOf(gameObject);
+            scene.GameHandler.playerHand.splice(index, 1);
         }
+        scene.cards.push(gameObject);
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.playerCards * 100);
         gameObject.y = dropZone.y + 70;
-        if(!scene.cards) scene.cards = [];
-        scene.cards.push(gameObject);
         dropZone.data.values.playerCards++;
         scene.input.setDraggable(gameObject, false);
         scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
