@@ -29,8 +29,8 @@ export default class StartScene extends Phaser.Scene{
             this.scene.start('Game');
         });
         tutorialButton.on("pointerdown", () => {
-            // this.scene.start('DuelScene');
-            console.log("Tutorial");
+            this.menuMusic.stop();
+            this.scene.start('Tutorial');
         });
         creditButton.on("pointerdown", () => {
             this.menuMusic.stop();

@@ -4,13 +4,14 @@ import StartScene from './scenes/StartScene.js';
 import Preload from './scenes/Preload.js';
 import Credits from './scenes/Credits.js';
 import Score from './scenes/Score.js';
+import Tutorial from './scenes/Tutorial.js';
 
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
     scene: [
-        Preload, StartScene, Game, Credits, Score
+        Preload, StartScene, Game, Credits, Score, Tutorial
     ]
 }
 

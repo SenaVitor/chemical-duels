@@ -8,10 +8,12 @@ export default class Preload extends Phaser.Scene{
         this.load.audio('scoreMusic', '/assets/sfx/aTaleLongPast.mp3');
         this.load.audio('duelMusic', '/assets/sfx/vsLancastrians.mp3');
         this.load.audio('creditsMusic', '/assets/sfx/worldMap.mp3');
+        this.load.audio('tutorialMusic', '/assets/sfx/loadGame.mp3');
         
         this.load.image('menu', '/assets/img/menu.png');
         this.load.image('creditsScreen', '/assets/img/credits.jpg');
         this.load.image('scoreScreen', '/assets/img/score.jpg');
+        this.load.image('tutorialScreen', '/assets/img/tutorial.jpg');
         this.load.image('start', '/assets/img/iniciar.png');
         this.load.image('tutorial', '/assets/img/tutorial.png');
         this.load.image('score', '/assets/img/placar.png');
