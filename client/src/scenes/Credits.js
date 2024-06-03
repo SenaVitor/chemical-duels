@@ -11,7 +11,7 @@ export default class Credits extends Phaser.Scene{
         });
         this.esc = this.input.keyboard.addKey('ESC');
         this.add.image(0, 0, 'creditsScreen').setOrigin(0).setAlpha(0.3).setScale(0.8);
-        const backButton = this.add.text(350, 500, 'Voltar', { fontSize: '32px', fill: '#fff' });
+        const backButton = this.add.text(350, 400, 'Voltar', { fontSize: '32px', fill: '#fff' });
         const creditsText = `
             - Desenvolvido por: Vitor Lucas
             - Linguagem Base: JavaScript 
@@ -25,7 +25,7 @@ export default class Credits extends Phaser.Scene{
             versão (física) desse jogo.
             `
 
-        this.add.text(150, 200, creditsText).setOrigin(0);
+        this.add.text(100, 200, creditsText).setOrigin(0);
 
         backButton.setInteractive({ useHandCursor: true });
         
