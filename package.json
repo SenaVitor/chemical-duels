@@ -7,7 +7,7 @@
         "start": "nodemon server.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Vitor Lucas",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.23.9",
