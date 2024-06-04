@@ -6,6 +6,7 @@ export default class Preload extends Phaser.Scene{
     preload(){
         this.load.audio('menuMusic', '/assets/sfx/mainMenu.mp3');
         this.load.audio('scoreMusic', '/assets/sfx/aTaleLongPast.mp3');
+        this.load.audio('scoreBoardMusic', '/assets/sfx/deckMenu.mp3');
         this.load.audio('duelMusic', '/assets/sfx/vsLancastrians.mp3');
         this.load.audio('creditsMusic', '/assets/sfx/worldMap.mp3');
         this.load.audio('tutorialMusic', '/assets/sfx/loadGame.mp3');
@@ -13,6 +14,7 @@ export default class Preload extends Phaser.Scene{
         this.load.image('menu', '/assets/img/menu.png');
         this.load.image('creditsScreen', '/assets/img/credits.jpg');
         this.load.image('scoreScreen', '/assets/img/score.jpg');
+        this.load.image('scoreBoardScreen', '/assets/img/scoreBoard.jpg');
         this.load.image('tutorialScreen', '/assets/img/tutorial.jpg');
         this.load.image('start', '/assets/img/iniciar.png');
         this.load.image('tutorial', '/assets/img/tutorial.png');

@@ -37,8 +37,8 @@ export default class StartScene extends Phaser.Scene{
             this.scene.start('Credits');
         });
         scoreButton.on("pointerdown", () => {
-            // this.scene.start('DuelScene');
-            console.log("Score");
+            this.menuMusic.stop();
+            this.scene.start('ScoreBoard');
         });
     }
 }
