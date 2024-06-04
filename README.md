@@ -64,9 +64,25 @@ Cada tipo de carta terá uma pontuação ao ser jogada, além disso outros fator
 
 ## Protótipos de Tela
 ![prototipo_telas](client/public/assets/img/prototipo-chemical-duel.drawio.png)
+
+## Instalação
+
+Valide se tem [Node.js](https://nodejs.org) instalado.
+
+Clone esse repositório e entre na pasta
+
+npm i
+
+### Rode o development server
+
+npm start
+
+Para visualizar localmente abra 2 abas do: http://localhost:8080/.
+
 ## Tecnologias e Ferramentas utilizadas
-- HTML
-- CSS 
-- JavaScript
-- Node.js
-- Phaser3
+- HTML - Linguagem de maração de hipertexto;
+- JavaScript - Linguagem de programação;
+- Node.js - Ambiente de execução;
+- Phaser3 - GameEngine;
+- Webpack - Ferramenta de Empacotamento;
+- Firebase - Banco de Dados para armazenar o ranking.
