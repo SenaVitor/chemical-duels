@@ -7,6 +7,8 @@ export default class GameHandler {
         this.playerHand = [];
         this.opponentHand = [];
         this.score = 0;
+        this.opponentScore = 0;
+        this.win = false;
 
         this.changeTurn = () => {
             this.isMyTurn = !this.isMyTurn;

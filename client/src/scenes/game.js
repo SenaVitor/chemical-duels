@@ -30,7 +30,8 @@ export default class Game extends Phaser.Scene {
     update() {
         if(this.GameHandler.gameState !== "Initializing" && this.GameHandler.playerHand.length === 0 && this.GameHandler.opponentHand.length === 0){
             this.duelMusic.stop();
-            this.scene.start('Score', { score: this.GameHandler.score });
+            if(this.GameHandler.score > this.GameHandler.opponentScore) this.GameHandler.win = true;
+            this.scene.start('Score', { score: this.GameHandler.score, win: this.GameHandler.win });
         }
     }
 }

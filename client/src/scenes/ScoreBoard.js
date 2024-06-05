@@ -1,5 +1,4 @@
-// import { getScores } from "../config/dataBase";
-import { getScores } from "../config/firebase";
+import { getScores } from "../config/fireBase";
 export default class ScoreBoard extends Phaser.Scene{
     constructor(){
         super('ScoreBoard');
