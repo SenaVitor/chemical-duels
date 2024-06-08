@@ -116,9 +116,6 @@ function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
         if(!scene.cards) scene.cards = [];
         if(gameObject.data.list.name === "substance"){
-            // const index = scene.substancesPreview.indexOf(substance => substance.sprite === gameObject.data.list.sprite);
-            // let substance = scene.substancesPreview.splice(index, 1);
-            // substance[0].setDepth(0);
             const card = scene.DeckHandler.dealCard(dropZone.x, dropZone.y, "substance", "playerCard", gameObject.data.list.sprite);
             const elements = getElements(gameObject.data.list.sprite);
             removeElements(elements, scene);

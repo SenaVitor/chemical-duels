@@ -18,6 +18,7 @@ export default class Game extends Phaser.Scene {
             volume: 0.5,
             loop: true
         });
+        this.cards = [];
         this.CardHandler = new CardHandler();
         this.DeckHandler = new DeckHandler(this);
         this.GameHandler = new GameHandler(this);
@@ -25,6 +26,7 @@ export default class Game extends Phaser.Scene {
         this.UIHandler = new UIHandler(this);
         this.UIHandler.buildUI();
         this.InteractiveHandler = new InteractiveHandler(this);
+        this.events.on('shutdown', this.shutdown, this);
     }
     
     update() {
@@ -32,6 +34,12 @@ export default class Game extends Phaser.Scene {
             this.duelMusic.stop();
             if(this.GameHandler.score > this.GameHandler.opponentScore) this.GameHandler.win = true;
             this.scene.start('Score', { score: this.GameHandler.score, win: this.GameHandler.win });
+        }
+    }
+
+    shutdown() {
+        if (this.socket) {
+            this.socket.disconnect();
         }
     }
 }
