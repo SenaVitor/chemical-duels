@@ -76,11 +76,7 @@ export default class InteractiveHandler {
                 });
                 scene.substancesZone.setVisible(true);
             }else{
-                scene.substancesPreview.forEach(card => {
-                    card.destroy();
-                });
-                scene.listingSubstances = false;
-                scene.substancesZone.setVisible(false);
+                stopShowSubstances(scene);
             }
         });
         
@@ -94,6 +90,7 @@ export default class InteractiveHandler {
                         return card.data.list.sprite;
                 });
                 const possibleSubstances = findPossibleCombinations(spriteList, sprites);
+                scene.listingSubstances = true;
                 let numCards = 0;
                 possibleSubstances.forEach((substance, i) => {
                     if(!Array.isArray(scene.substancesPreview)) scene.substancesPreview = [];
@@ -106,7 +103,6 @@ export default class InteractiveHandler {
                         substance
                     ).setDepth(2);
                     scene.substancesPreview.push(card);
-                    scene.listingSubstances = true;
                     numCards++;
                 });
             }else{
@@ -199,9 +195,11 @@ function getElements(substance) {
 }
 
 function stopShowSubstances(scene) {
-    scene.substancesPreview.forEach(card => {
-        card.destroy();
-    });
+    if(Array.isArray(scene.substancesPreview)) {
+        scene.substancesPreview.forEach(card => {
+            card.destroy();
+        });
+    }
     scene.listingSubstances = false;
     scene.substancesZone.setVisible(false);
 }
