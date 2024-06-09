@@ -30,6 +30,7 @@ export default class Game extends Phaser.Scene {
     }
     
     update() {
+        this.turnPlayer.setText(this.GameHandler.isMyTurn ? "Jogador" : "Oponente");
         if(this.GameHandler.gameState !== "Initializing" && (this.GameHandler.playerLife <= 0 || this.GameHandler.opponentLife <= 0)){
             this.duelMusic.stop();
             if(this.GameHandler.playerLife > this.GameHandler.opponentLife) {

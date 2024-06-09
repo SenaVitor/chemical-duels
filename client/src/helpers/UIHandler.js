@@ -35,10 +35,12 @@ export default class UIHandler {
             scene.textSubstances = scene.add.text(633, 345, "Substâncias").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
             scene.listSubstances = scene.add.text(648, 380, "Listar").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1).setInteractive({ useHandCursor: true });
             scene.playSubstance = scene.add.text(645, 410, "Invocar").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1).setInteractive({ useHandCursor: true });
-            scene.playerLifeText = scene.add.text(632, 545, "PV Jogador").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
-            scene.playerLifePoints = scene.add.text(652, 565, scene.GameHandler.playerLife).setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
-            scene.opponentLifeText = scene.add.text(632, 95, "PV Oponente").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
-            scene.opponentLifePoints = scene.add.text(652, 115, scene.GameHandler.opponentLife).setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.playerLifeText = scene.add.text(730, 570, "PV").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.playerLifePoints = scene.add.text(750, 570, scene.GameHandler.playerLife).setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.opponentLifeText = scene.add.text(730, 20, "PV").setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.opponentLifePoints = scene.add.text(750, 20, scene.GameHandler.opponentLife).setFontSize(14).setFontFamily("Trebuchet MS").setDepth(1);
+            scene.turn = scene.add.text(730, 285, "Turno do").setFontSize(14).setFontFamily("Trebuchet MS");
+            scene.turnPlayer = scene.add.text(730, 315, scene.GameHandler.isMyTurn ? "Jogador" : "Oponente").setFontSize(14).setFontFamily("Trebuchet MS");
         }
 
         this.buildUI = () => {
