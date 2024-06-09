@@ -7,8 +7,9 @@ export default class GameHandler {
         this.playerHand = [];
         this.opponentHand = [];
         this.score = 0;
-        this.playerLife = 100;
-        this.opponentLife = 100;
+        this.initialLife = 100;
+        this.playerLife = this.initialLife;
+        this.opponentLife = this.initialLife;
         this.win = false;
 
         this.changeTurn = () => {

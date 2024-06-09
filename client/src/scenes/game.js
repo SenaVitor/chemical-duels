@@ -34,8 +34,8 @@ export default class Game extends Phaser.Scene {
             this.duelMusic.stop();
             if(this.GameHandler.playerLife > this.GameHandler.opponentLife) {
                 this.GameHandler.win = true;
-                this.score += 50;
-                if(this.GameHandler.playerLife === 2000) this.score += 100;
+                this.GameHandler.score += 50;
+                if(this.GameHandler.playerLife === this.GameHandler.initialLife) this.GameHandler.score += 100;
             } 
             this.scene.start('Score', { score: this.GameHandler.score, win: this.GameHandler.win });
         }

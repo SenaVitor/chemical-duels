@@ -56,11 +56,11 @@ export default class SocketHandler {
                         scene.dropZone.y - 70, card.name, "opponentCard", elements));
                     removeElements(elements, scene);
                     if(card.cardType === "exothermic"){
-                        scene.GameHandler.opponentLife -= card.enthalpy;
-                        scene.opponentLifePoints.setText(scene.GameHandler.opponentLife);
-                    }else{
-                        scene.GameHandler.playerLife += card.enthalpy;  
+                        scene.GameHandler.playerLife -= card.enthalpy;
                         scene.playerLifePoints.setText(scene.GameHandler.playerLife);
+                    }else{
+                        scene.GameHandler.opponentLife += card.enthalpy;  
+                        scene.opponentLifePoints.setText(scene.GameHandler.opponentLife);
                     }
                 }
                 scene.dropZone.data.values.opponentCards++;
