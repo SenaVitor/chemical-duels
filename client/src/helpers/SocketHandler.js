@@ -55,6 +55,13 @@ export default class SocketHandler {
                     scene.cards.push(scene.DeckHandler.dealCard((scene.dropZone.x - 250) + (scene.dropZone.data.values.opponentCards * 100), 
                         scene.dropZone.y - 70, card.name, "opponentCard", elements));
                     removeElements(elements, scene);
+                    if(card.cardType === "exothermic"){
+                        scene.GameHandler.opponentLife -= card.enthalpy;
+                        scene.opponentLifePoints.setText(scene.GameHandler.opponentLife);
+                    }else{
+                        scene.GameHandler.playerLife += card.enthalpy;  
+                        scene.playerLifePoints.setText(scene.GameHandler.playerLife);
+                    }
                 }
                 scene.dropZone.data.values.opponentCards++;
             }

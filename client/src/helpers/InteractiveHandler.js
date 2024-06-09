@@ -121,6 +121,16 @@ function playCard(gameObject, dropZone, scene){
             removeElements(elements, scene);
             stopShowSubstances(scene);
             gameObject = card;
+            console.log("player " + scene.playerLifePoints + " op " + scene.opponentLifePoints);
+            console.log("player obj " + JSON.stringify(scene.playerLifePoints) + " op obj " + JSON.stringify(scene.opponentLifePoints));
+            if(card.data.list.cardType === "exothermic"){
+                scene.GameHandler.opponentLife -= card.data.list.enthalpy;
+                scene.opponentLifePoints.setText(scene.GameHandler.opponentLife);
+            }else{
+                scene.GameHandler.playerLife += card.data.list.enthalpy;  
+                scene.playerLifePoints.setText(scene.GameHandler.playerLife);
+            }
+            console.log("p " + scene.GameHandler.playerLife + " op " + scene.GameHandler.opponentLife)
         }else{
             const index = scene.GameHandler.playerHand.indexOf(gameObject);
             scene.GameHandler.playerHand.splice(index, 1);
