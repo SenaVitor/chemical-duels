@@ -40,22 +40,34 @@ io.on('connection', function (socket) {
     });
 
     socket.on('dealCards', function (socketId) {
-        for(let i = 0; i < 5; i++) {
+        console.log("deal cards server " + socketId + " cards " + players[socketId].inHand.length)
+        if(players[socketId].inHand.length === 0) {
+            for(let i = 0; i < 5; i++) {
+                if(players[socketId].inDeck.length === 0){
+                    players[socketId].inDeck = ["element"];
+                }
+                players[socketId].inHand.push(players[socketId].inDeck.shift());
+            }
+            console.log(players);
+            io.emit('dealCards', socketId, players[socketId].inHand);
+            readyCheck++;
+            if(readyCheck >= 2) {
+                gameState = "Ready";
+                io.emit('changeGameState', "Ready");
+            }
+        } else {
             if(players[socketId].inDeck.length === 0){
                 players[socketId].inDeck = ["element"];
             }
             players[socketId].inHand.push(players[socketId].inDeck.shift());
-        }
-        console.log(players);
-        io.emit('dealCards', socketId, players[socketId].inHand);
-        readyCheck++;
-        if(readyCheck >= 2) {
-            gameState = "Ready";
-            io.emit('changeGameState', "Ready");
+            const card = players[socketId].inHand[players[socketId].inHand.length - 1];
+            console.log(players);
+            io.emit('dealCards', socketId, [card]);
         }
     });
 
     socket.on('cardPlayed', function (cardName, socketId) {
+        if(cardName.name !== "substance") players[socketId].inHand.shift();
         io.emit('cardPlayed', cardName, socketId);
         io.emit('changeTurn');
     });

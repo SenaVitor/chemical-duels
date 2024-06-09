@@ -31,7 +31,21 @@ export default class Game extends Phaser.Scene {
     
     update() {
         this.turnPlayer.setText(this.GameHandler.isMyTurn ? "Jogador" : "Oponente");
-        if(this.GameHandler.gameState !== "Initializing" && (this.GameHandler.playerLife <= 0 || this.GameHandler.opponentLife <= 0)){
+        if(this.dropZone.data.values.playerCards === 6 || this.dropZone.data.values.opponentCards === 6) {
+            const lpDifference = this.GameHandler.playerLife - this.GameHandler.opponentLife;
+            if(lpDifference < 0) {
+                this.GameHandler.playerLife = 0;
+            }else if(lpDifference > 0) {
+                this.GameHandler.opponentLife = 0;
+            }else {
+                if(this.dropZone.data.values.playerCards === 6){
+                    this.GameHandler.opponentLife = 0;
+                }else{
+                    this.GameHandler.playerLife = 0;
+                }
+            }
+        }
+        if(this.GameHandler.gameState !== "Initializing" && (this.GameHandler.playerLife <= 0 || this.GameHandler.opponentLife <= 0)) {
             this.duelMusic.stop();
             if(this.GameHandler.playerLife > this.GameHandler.opponentLife) {
                 this.GameHandler.win = true;

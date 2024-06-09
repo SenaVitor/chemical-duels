@@ -131,6 +131,8 @@ function playCard(gameObject, dropZone, scene){
         }else{
             const index = scene.GameHandler.playerHand.indexOf(gameObject);
             scene.GameHandler.playerHand.splice(index, 1);
+            scene.socket.emit("dealCards", scene.socket.id);
+            orderHand(scene);
         }
         scene.cards.push(gameObject);
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.playerCards * 100);
@@ -172,6 +174,19 @@ function orderCards(scene){
             opponentIndex++;
         }
             
+    }); 
+}
+
+function orderHand(scene){
+    let index = 0;
+    scene.GameHandler.playerHand.forEach(card => {
+        card.x = 100 + (index * 100);
+        index++;    
+    }); 
+    index = 0;
+    scene.GameHandler.opponentHand.forEach(card => {
+        card.x = 100 + (index * 100);
+        index++;    
     }); 
 }
 

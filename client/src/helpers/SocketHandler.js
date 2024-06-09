@@ -32,13 +32,23 @@ export default class SocketHandler {
         });
 
         scene.socket.on('dealCards', (socketId, cards) => {
-            if(socketId === scene.socket.id) {
-                for(let i in cards) {
-                    let card = scene.GameHandler.playerHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 530, cards[i], "playerCard"));
-                }
-            }else {
-                for(let i in cards) {
-                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 80, "cardBack", "opponentCard"));
+            if(cards.length === 1) {
+                setTimeout(() => {
+                    if(socketId === scene.socket.id) {
+                        let card = scene.GameHandler.playerHand.push(scene.DeckHandler.dealCard(500, 530, cards[0], "playerCard"));
+                    }else {
+                        let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100, 80, "cardBack", "opponentCard"));
+                    }
+                }, 1000);
+            }else{
+                if(socketId === scene.socket.id) {
+                    for(let i in cards) {
+                        let card = scene.GameHandler.playerHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 530, cards[i], "playerCard"));
+                    }
+                }else {
+                    for(let i in cards) {
+                        let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 100), 80, "cardBack", "opponentCard"));
+                    }
                 }
             }
         });
