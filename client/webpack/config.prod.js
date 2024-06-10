@@ -14,7 +14,7 @@ module.exports = {
     entry: "./src/main.js",
     output: {
         path: path.resolve(process.cwd(), 'dist'),
-        filename: "./bundle.min.js"
+        filename: "bundle.min.js"
     },
     devtool: false,
     performance: {
@@ -68,9 +68,7 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns: [
-                { from: 'public/assets', to: 'assets' },
-                { from: 'public/favicon.png', to: 'favicon.png' },
-                { from: 'public/style.css', to: 'style.css' }
+                { from: 'public/assets', to: 'assets' }
             ],
         }),
     ]
