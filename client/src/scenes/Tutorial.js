@@ -16,32 +16,31 @@ export default class Tutorial extends Phaser.Scene{
             - São necessários 2 jogadores para jogar, o jogo inicia
               após ambos apertarem o botão Puxar Cartas, o primeiro
               a entrar inicia a partida.
-              
             - Use o mouse para jogar elementos, arrastando eles até
               o centro da tela, e utilize-os para formar Substâncias.
-
             - É possível listar as substâncias com o botão Listar.
-
             - Para invocar uma substância utilize o botão Invocar.
-
             - A pontuação será salva no ranking ao final da partida. 
-
             - Ao invocar substâncias o jogador ganhará pontos de vida
               caso seja uma substância endotérmica (+), caso contrário,
               ou seja, se for uma substância exotérmica (-) causará dano
               aos pontos de vida do oponente, de acordo com a entalpia da
-              substância.
+              substância. Vence o que zerar os pontos de vida do adversário 
+              primeiro, caso algum duelista jogue 6 cartas em campo ou fique
+              sem cartas na mão, o jogo acaba e vence aquele com maior vida,
+              caso ambos tenha a mesma quantidade o jogador que jogou a 
+              última carta será o vencedor.
 
             -Tabela de pontuação
-              .---------------------------------.
-              | Ação | Pontuação                |
-              | -----------------------| -------|
-              | Sem Dano               | 100 pts|
-              | Vitória                | 50 pts |
-              | Jogar uma substância   | 20 pts |
-              | Jogar um elemento      | 5 pts  |
-              | Jogar uma alquimia     | 5 pts  |
-              .---------------------------------.
+              .------------------------------------.
+              | Ação                   | Pontuação |
+              | -----------------------| ----------|
+              | Sem Dano               | 100 pts   |
+              | Vitória                | 50 pts    |
+              | Jogar uma substância   | 20 pts    |
+              | Jogar um elemento      | 5 pts     |
+              | Jogar uma alquimia     | 5 pts     |
+              .------------------------------------.
             `
 
         this.add.text(50, 140, tutorialText).setOrigin(0);
