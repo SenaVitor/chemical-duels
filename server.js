@@ -40,7 +40,6 @@ io.on('connection', function (socket) {
     });
 
     socket.on('dealCards', function (socketId) {
-        console.log("deal cards server " + socketId + " cards " + players[socketId].inHand.length)
         if(players[socketId].inHand.length === 0) {
             for(let i = 0; i < 5; i++) {
                 if(players[socketId].inDeck.length === 0){
@@ -75,6 +74,8 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('A user disconnected: ' + socket.id);
         delete players[socket.id];
+        gameState = "Initializing";
+        readyCheck = 0;
     });
 });
 

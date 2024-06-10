@@ -112,9 +112,8 @@ export default class InteractiveHandler {
     }
 }
 
-function returnElementToField(substancesInField, scene) {
+function listElements(substancesInField) {
     let elementsList = [];
-     
     const substances = {
         no: ["n", "o"],
         naoh: ["na", "o", "h"],
@@ -132,19 +131,28 @@ function returnElementToField(substancesInField, scene) {
         c2h2: ["c", "h"],
         bro: ["br", "o"]
     };
-
     substancesInField.forEach(substance => {
-        elementsList = elementsList.concat(substances[substance.data.list.sprite]);
+        if(substance.data){
+            elementsList = elementsList.concat(substances[substance.data.list.sprite]);
+        }else{
+            elementsList = elementsList.concat(substances[substance]);
+        }
     });
     elementsList = removeDuplicates(elementsList);
+    return elementsList;
+}
+
+function playElement(substances, scene) {
+    const elementsList = listElements(substances);
     scene.listingSubstances = true;
     let numCards = 0;
+    scene.substancesZone.setVisible(true);
     elementsList.forEach((element, i) => {
         if(!Array.isArray(scene.substancesPreview)) scene.substancesPreview = [];
-        if(numCards > 7 && i <= elementsList.length/2) numCards = 0;
+        if(numCards > 7 && i >= elementsList.length/2) numCards = 0;
         const card = scene.DeckHandler.dealCard(
             (scene.dropZone.x - 250) + (numCards * 70), 
-            numCards > 7 && i <= elementsList.length/2 ? scene.dropZone.y + 50 : scene.dropZone.y - 50, 
+            i > 7 && i >= elementsList.length/2 + 1 ? scene.dropZone.y + 50 : scene.dropZone.y - 50, 
             "element", 
             "playerCard", 
             element
@@ -177,9 +185,8 @@ function playCard(gameObject, dropZone, scene){
                 scene.playerLifePoints.setText(scene.GameHandler.playerLife);
             }
         }else{
-            if(gameObject.data.list.sprite === 'lavoisier'){
+            if(gameObject.data.list.sprite === 'lavoisier' && scene.dropZone.data.values.playerCards < 5){
                 let substancesInField = scene.cards.filter(card => card.data.list.name === "substance");    
-                console.log(JSON.stringify(substancesInField));
                 if(substancesInField.length === 0) {
                     scene.GameHandler.score -= 5;
                     gameObject.x = gameObject.input.dragStartX;
@@ -187,17 +194,23 @@ function playCard(gameObject, dropZone, scene){
                     alert("Sem substâncias em campo!");
                     return;
                 } 
-                returnElementToField(substancesInField, scene);
-                scene.playedLavoisier = true;
+                playElement(substancesInField, scene);
+                scene.playedAlchemy = true;
                 const index = scene.GameHandler.playerHand.indexOf(gameObject);
                 scene.GameHandler.playerHand.splice(index, 1);
-            }else if(scene.playedLavoisier){
+            }else if(gameObject.data.list.sprite === 'transmutacao' && scene.dropZone.data.values.playerCards < 5) {
+                const substances = ["no", "naoh", "naf", "nacl", "mno", "mgo", "kf", "kbr", "hcl", "h2so4", "h2o", "cs2", "cas", "c2h2", "bro"];
+                playElement(substances, scene);
+                scene.playedAlchemy = true;
+                const index = scene.GameHandler.playerHand.indexOf(gameObject);
+                scene.GameHandler.playerHand.splice(index, 1);
+            }else if(scene.playedAlchemy){
                 const card = scene.DeckHandler.dealCard(dropZone.x, dropZone.y, "element", "playerCard", gameObject.data.list.sprite);            
                 gameObject = card;
                 scene.listSubstances.setInteractive();
                 scene.playSubstance.setInteractive();
-                scene.playedLavoisier = false;
-                removeElements(["lavoisier"], scene);
+                scene.playedAlchemy = false;
+                removeElements(["transmutacao", "lavoisier"], scene);
                 stopShowSubstances(scene);
                 scene.socket.emit("dealCards", scene.socket.id);
                 orderHand(scene);
@@ -212,7 +225,7 @@ function playCard(gameObject, dropZone, scene){
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.playerCards * 100);
         gameObject.y = dropZone.y + 70;
         dropZone.data.values.playerCards++;
-        if(!scene.playedLavoisier) {
+        if(!scene.playedAlchemy) {
             scene.input.setDraggable(gameObject, false);
             scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
         }

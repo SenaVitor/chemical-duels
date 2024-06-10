@@ -31,7 +31,8 @@ export default class Game extends Phaser.Scene {
     
     update() {
         this.turnPlayer.setText(this.GameHandler.isMyTurn ? "Jogador" : "Oponente");
-        if(this.dropZone.data.values.playerCards === 6 || this.dropZone.data.values.opponentCards === 6) {
+        if(this.dropZone.data.values.playerCards === 6 || this.dropZone.data.values.opponentCards === 6 || (this.GameHandler.gameState !== "Initializing" && 
+            (this.GameHandler.playerHand.length === 0 || this.GameHandler.opponentHand.length === 0))) {
             const lpDifference = this.GameHandler.playerLife - this.GameHandler.opponentLife;
             if(lpDifference < 0) {
                 this.GameHandler.playerLife = 0;
