@@ -5,7 +5,7 @@ import Substance from "./cards/Substance";
 export default class DeckHandler {
     constructor(scene) {
         this.sprites = [
-            "br", "c", "ca", "cl", "f", "h", "k", "mg", "mn", "n", "na", "o", "s", "transmutacao", "lavoisier",
+            "br", "c", "ca", "cl", "f", "h", "k", "mg", "mn", "n", "na", "o", "s", "lavoisier", "lavoisier",
             "br", "c", "ca", "cl", "f", "h", "k", "mg", "mn", "n", "na", "o", "s"
         ];
         this.dealCard = (x, y, name, type, complement) => {

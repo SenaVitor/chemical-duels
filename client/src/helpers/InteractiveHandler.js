@@ -112,6 +112,54 @@ export default class InteractiveHandler {
     }
 }
 
+function returnElementToField(substancesInField, scene) {
+    let elementsList = [];
+     
+    const substances = {
+        no: ["n", "o"],
+        naoh: ["na", "o", "h"],
+        naf: ["na", "f"],
+        nacl: ["na", "cl"],
+        mno: ["mn", "o"],
+        mgo: ["mg", "o"],
+        kf: ["k", "f"],
+        kbr: ["k", "br"],
+        hcl: ["h", "cl"],
+        h2so4: ["h", "s", "o"],
+        h2o: ["h", "o"],
+        cs2: ["c", "s"],
+        cas: ["ca", "s"],
+        c2h2: ["c", "h"],
+        bro: ["br", "o"]
+    };
+
+    substancesInField.forEach(substance => {
+        elementsList = elementsList.concat(substances[substance.data.list.sprite]);
+    });
+    elementsList = removeDuplicates(elementsList);
+    scene.listingSubstances = true;
+    let numCards = 0;
+    elementsList.forEach((element, i) => {
+        if(!Array.isArray(scene.substancesPreview)) scene.substancesPreview = [];
+        if(numCards > 7 && i <= elementsList.length/2) numCards = 0;
+        const card = scene.DeckHandler.dealCard(
+            (scene.dropZone.x - 250) + (numCards * 70), 
+            numCards > 7 && i <= elementsList.length/2 ? scene.dropZone.y + 50 : scene.dropZone.y - 50, 
+            "element", 
+            "playerCard", 
+            element
+        ).setDepth(2);
+        scene.substancesPreview.push(card);
+        numCards++;
+    });
+    scene.listSubstances.disableInteractive();
+    scene.playSubstance.disableInteractive();
+}
+
+function removeDuplicates(array) {
+    return array.filter((item, index) => array.indexOf(item) === index);
+}
+
 function playCard(gameObject, dropZone, scene){
     if(scene.GameHandler.isMyTurn && scene.GameHandler.gameState === "Ready" && gameObject.data.list.name !== "cardBack") {
         if(!scene.cards) scene.cards = [];
@@ -129,17 +177,45 @@ function playCard(gameObject, dropZone, scene){
                 scene.playerLifePoints.setText(scene.GameHandler.playerLife);
             }
         }else{
-            const index = scene.GameHandler.playerHand.indexOf(gameObject);
-            scene.GameHandler.playerHand.splice(index, 1);
-            scene.socket.emit("dealCards", scene.socket.id);
-            orderHand(scene);
+            if(gameObject.data.list.sprite === 'lavoisier'){
+                let substancesInField = scene.cards.filter(card => card.data.list.name === "substance");    
+                console.log(JSON.stringify(substancesInField));
+                if(substancesInField.length === 0) {
+                    scene.GameHandler.score -= 5;
+                    gameObject.x = gameObject.input.dragStartX;
+                    gameObject.y = gameObject.input.dragStartY;
+                    alert("Sem substâncias em campo!");
+                    return;
+                } 
+                returnElementToField(substancesInField, scene);
+                scene.playedLavoisier = true;
+                const index = scene.GameHandler.playerHand.indexOf(gameObject);
+                scene.GameHandler.playerHand.splice(index, 1);
+            }else if(scene.playedLavoisier){
+                const card = scene.DeckHandler.dealCard(dropZone.x, dropZone.y, "element", "playerCard", gameObject.data.list.sprite);            
+                gameObject = card;
+                scene.listSubstances.setInteractive();
+                scene.playSubstance.setInteractive();
+                scene.playedLavoisier = false;
+                removeElements(["lavoisier"], scene);
+                stopShowSubstances(scene);
+                scene.socket.emit("dealCards", scene.socket.id);
+                orderHand(scene);
+            }else{
+                const index = scene.GameHandler.playerHand.indexOf(gameObject);
+                scene.GameHandler.playerHand.splice(index, 1);
+                scene.socket.emit("dealCards", scene.socket.id);
+                orderHand(scene);
+            }
         }
         scene.cards.push(gameObject);
         gameObject.x = (dropZone.x - 250) + (dropZone.data.values.playerCards * 100);
         gameObject.y = dropZone.y + 70;
         dropZone.data.values.playerCards++;
-        scene.input.setDraggable(gameObject, false);
-        scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
+        if(!scene.playedLavoisier) {
+            scene.input.setDraggable(gameObject, false);
+            scene.socket.emit('cardPlayed', gameObject.data.values, scene.socket.id);
+        }
     } else {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
