@@ -82,6 +82,7 @@ npm start
 ### Inicie o jogo
 
 Entre na pasta client com o comando: cd/client
+
 Após isso, rode o jogo com o comando: npm start
 
 Para visualizar localmente abra 2 abas do: http://localhost:8080/.
