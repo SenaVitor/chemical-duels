@@ -81,7 +81,7 @@ npm start
 
 ### Inicie o jogo
 
-Entre na pasta client com o comando: cd/client
+Entre na pasta client com o comando: cd .\client
 
 Após isso, rode o jogo com o comando: npm start
 
