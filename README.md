@@ -71,11 +71,18 @@ Valide se tem [Node.js](https://nodejs.org) instalado.
 
 Clone esse repositório e entre na pasta
 
-npm i
+git clone https://github.com/SenaVitor/chemical-duels
 
-### Rode o development server
+execute o comando: npm install
+
+### Rode o servidor
 
 npm start
+
+### Inicie o jogo
+
+Entre na pasta client com o comando: cd/client
+Após isso, rode o jogo com o comando: npm start
 
 Para visualizar localmente abra 2 abas do: http://localhost:8080/.
 
